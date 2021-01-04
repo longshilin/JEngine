@@ -392,8 +392,8 @@ namespace libx
             {
                 var path = _savePath + Versions.Filename + ".tmp";
                 var versions = Versions.LoadVersions(path);
-                var basePath = GetBasePath();
-                yield return UpdateCopy(versions, basePath);
+                // var basePath = GetBasePath();
+                yield return UpdateCopy(versions, baseURL);
                 _step = Step.Versions;
             }
 
@@ -529,8 +529,9 @@ namespace libx
         private IEnumerator RequestCopy()
         {
             var v1 = Versions.LoadVersion(_savePath + Versions.Filename);
-            var basePath = GetBasePath();
-            var request = UnityWebRequest.Get(Path.Combine(basePath, Versions.Filename));
+            // var basePath = GetBasePath();
+            // var request = UnityWebRequest.Get(Path.Combine(basePath, Versions.Filename));
+            var request = UnityWebRequest.Get(Path.Combine(baseURL, Versions.Filename));
             var path = _savePath + Versions.Filename + ".tmp";
             request.downloadHandler = new DownloadHandlerFile(path);
             yield return request.SendWebRequest();
