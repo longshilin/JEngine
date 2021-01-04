@@ -23,7 +23,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
+using System.Collections.Generic;
 using JEngine.Core;
 using JEngine.Event;
 using System.Diagnostics;
@@ -34,6 +36,7 @@ namespace JEngine.Examples
     {
         public override void Init()
         {
+            /*
             Stopwatch sw = new Stopwatch();
 
             //JEvent.ShowLog = true;//是否显示一些log
@@ -75,9 +78,15 @@ namespace JEngine.Examples
 
             //广播DataClass，全部void xxx(DataClass)的都会被广播到
             JEvent.defaultEvent.Post(new DataClass() { Money = 123456,name="JEnvent测试"});
+        */
+
+            var ev = new JEvent();
+            ev.Register(typeof(EventClass));
+            ev.Post(200);
+            ev.Post(404);
         }
 
-        public override void Run()
+        /*public override void Run()
         {
             //创建独立的JEvent
             JEvent e = new JEvent();
@@ -91,10 +100,38 @@ namespace JEngine.Examples
         private void TestMethod()
         {
             Log.Print("独立的JEvent的Test哦~");
+        }*/
+    }
+
+    [Subscriber(ThreadMode.Other)]
+    public class EventClass
+    {
+        private List<int> codes = new List<int>();
+
+        public void SendMsgCallback(int code)
+        {
+            switch (code)
+            {
+                case 200:
+                    Log.Print("发送成功！");
+                    break;
+                case 404:
+                    Log.Print("发送失败 - 404 not found");
+                    break;
+                case 403:
+                    Log.Print("发送失败 - 403 无权限");
+                    break;
+            }
+        }
+
+        public void UseCode(int code)
+        {
+            codes.Add(code);
+            Log.Print($"状态码有：{string.Join(",", codes)}");
         }
     }
 
-    //继承了也能被监听
+    /*//继承了也能被监听
     [Subscriber(ThreadMode.Main)]
     public class InheritTest
     {
@@ -151,5 +188,5 @@ namespace JEngine.Examples
         {
             Log.Print("Class2: MethodD运行在线程：" + System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
-    }
+    }*/
 }

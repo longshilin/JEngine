@@ -23,11 +23,14 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
+using System.Diagnostics;
 using JEngine.Core;
 using JEngine.AntiCheat;
 using JEngine.Examples;
 using JEngine.Net;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace HotUpdateScripts
 {
@@ -35,7 +38,20 @@ namespace HotUpdateScripts
     {
         public static void RunGame()
         {
-
+            // JWebSocketDemo.RunNormalServerDemo("127.0.0.1", 7799);
+            
+            /*var sw = new Stopwatch();
+            var ac = new JAction();
+            ac.Delay(2).Do(() =>
+            {
+                sw.Start();
+                Log.Print($"帧数：{GameStats.fps}");
+                Log.Print($"1帧={1000 / GameStats.fps}毫秒");
+            }).DelayFrame(1).Do(() =>
+            {
+                sw.Stop();
+                Log.Print($"执行了{sw.ElapsedMilliseconds}ms");
+            }).Execute();*/
         }
     }
 }
